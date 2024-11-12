@@ -17,6 +17,7 @@ public class SentPayDump extends PanacheEntityBase {
     public String serviceId;
     public String productId;
     public String customerSegmentGroup;
+    public String sentPayId;
     public String phone;
     public String atDateOf;
     public String deliveryStatus;

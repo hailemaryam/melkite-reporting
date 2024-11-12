@@ -8,6 +8,7 @@ create table SentPayDump (
     phone varchar(255),
     productId varchar(255),
     serviceId varchar(255),
+    sentPayId varchar(255),
     status bit,
     primary key (id)
 ) engine=InnoDB;

@@ -13,6 +13,7 @@ create table SentPayList (
     pickedStatus bit,
     productId varchar(255),
     serviceId varchar(255),
+    sentPayId varchar(255),
     successfulCount integer,
     totalNoOfRequestSent integer,
     primary key (id)

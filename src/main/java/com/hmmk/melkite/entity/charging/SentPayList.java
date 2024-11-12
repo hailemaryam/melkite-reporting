@@ -16,6 +16,7 @@ public class SentPayList extends PanacheEntityBase {
     public String id;
     public String serviceId;
     public String productId;
+    public String sentPayId;
     public String customerSegmentGroup;
     public String phone;
     public Instant fetchedTime;
