@@ -1,7 +1,6 @@
 package com.hmmk.melkite.web.rest;
 
 import com.hmmk.melkite.entity.charging.SentPay;
-import com.hmmk.melkite.entity.subscription.PhoneList;
 import com.hmmk.melkite.web.rest.vm.PageRequestVM;
 import com.hmmk.melkite.web.rest.vm.SentPayDateFilter;
 import com.hmmk.melkite.web.rest.vm.SentPayListFilter;
@@ -19,7 +18,7 @@ public class Charging {
     @Produces("application/json")
     @Consumes("application/json")
     public RestResponse<ListResponseDTO> getSentPayByDateFilter(SentPayDateFilter sentPayDateFilter) {
-        Paged<SentPay> result = new Paged<>(PhoneList.find(sentPayDateFilter.buildQuery()));
+        Paged<SentPay> result = new Paged<>(SentPay.find(sentPayDateFilter.buildQuery()));
         return RestResponse.ResponseBuilder.ok(new ListResponseDTO(result.content, result.totalCount)).build();
     }
 
@@ -32,7 +31,7 @@ public class Charging {
             @BeanParam PageRequestVM pageRequest) {
         var page = pageRequest.toPage();
         Paged<SentPay> result;
-        result = new Paged<>(PhoneList.find(sentPayTableFilter.buildQuery()).page(page));
+        result = new Paged<>(SentPay.find(sentPayTableFilter.buildQuery()).page(page));
         return RestResponse.ResponseBuilder.ok(new ListResponseDTO(result.content, result.totalCount)).build();
     }
 
@@ -45,7 +44,7 @@ public class Charging {
             @BeanParam PageRequestVM pageRequest) {
         var page = pageRequest.toPage();
         Paged<SentPay> result;
-        result = new Paged<>(PhoneList.find(sentPayListFilter.buildQuery()).page(page));
+        result = new Paged<>(SentPay.find(sentPayListFilter.buildQuery()).page(page));
         return RestResponse.ResponseBuilder.ok(new ListResponseDTO(result.content, result.totalCount)).build();
     }
 

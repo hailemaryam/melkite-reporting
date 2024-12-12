@@ -1,11 +1,13 @@
 package com.hmmk.melkite.web.rest;
 
+import com.hmmk.melkite.dao.CustomerSegmentGroupDao;
 import com.hmmk.melkite.entity.subscription.CustomerSegmentGroup;
 import com.hmmk.melkite.web.rest.errors.BadRequestAlertException;
 import com.hmmk.melkite.web.rest.vm.CustomerGroupFilter;
 import com.hmmk.melkite.web.rest.vm.PageRequestVM;
 import com.hmmk.melkite.web.util.ListResponseDTO;
 import com.hmmk.melkite.web.util.Paged;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
@@ -13,6 +15,9 @@ import org.jboss.resteasy.reactive.RestResponse;
 
 @Path("customer-segment-group")
 public class CustomerSegment {
+
+    @Inject
+    CustomerSegmentGroupDao customerSegmentGroupDao;
 
     @GET
     @Consumes("application/json")
@@ -34,6 +39,7 @@ public class CustomerSegment {
         if (customerSegmentGroup.id != null) {
             throw new BadRequestAlertException("A new customerSegmentGroup cannot already have an ID");
         }
+        customerSegmentGroup.active = false;
         customerSegmentGroup.persist();
         return RestResponse.ResponseBuilder.create(RestResponse.Status.CREATED, customerSegmentGroup).build();
     }
@@ -47,6 +53,9 @@ public class CustomerSegment {
             throw new BadRequestAlertException("Invalid id");
         }
         customerSegmentGroup.persist();
+        if (customerSegmentGroup.active) {
+            customerSegmentGroupDao.deactivateOtherByServiceIdAndProductIdAndCustomerSegmentGroupName(customerSegmentGroup.serviceId, customerSegmentGroup.productId, customerSegmentGroup.customerSegmentGroupName);
+        }
         return RestResponse.ResponseBuilder.ok(customerSegmentGroup).build();
     }
 

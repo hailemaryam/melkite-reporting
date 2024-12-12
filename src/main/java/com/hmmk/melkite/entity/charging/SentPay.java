@@ -21,11 +21,6 @@ public class SentPay extends PanacheEntityBase {
     public Instant sentTime;
     public Instant expiryTime;
     public Integer successfulCount;
-    public Integer noBalanceCount;
-    public Integer invalidSubscriptionCount;
-    public Integer internalErrorCount;
-    public Integer noSubscriptionCount;
-    public Integer hourRetryLimitExceededCount;
-    public Integer dayRetryLimitExceededCount;
+    public Integer failedCount;
     public Integer totalNoOfRequestSent;
 }

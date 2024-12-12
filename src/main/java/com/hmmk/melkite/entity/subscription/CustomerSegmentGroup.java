@@ -15,6 +15,7 @@ public class CustomerSegmentGroup extends PanacheEntityBase {
     public String serviceId;
     public String productId;
     public String customerSegmentGroupName;
+    public Boolean active;
     public Integer subscriberCount;
     public Integer unSubscriberCount;
 }

@@ -5,5 +5,6 @@ create table CustomerSegmentGroup (
     serviceId varchar(255),
     subscriberCount integer,
     unSubscriberCount integer,
+    active bit not null,
     primary key (id)
 ) engine=InnoDB;

@@ -17,6 +17,7 @@ public class SendPayItem {
     private String serviceId;
     private String productId;
     private String phone;
+    private String customerSegmentGroup;
     private Boolean status;
     private String statusMessage;
     private Instant lastSentTime;
