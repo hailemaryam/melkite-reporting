@@ -32,7 +32,7 @@ public class EventReceiver {
 
     }
 
-    @Incoming("success-notifier")
+    @Incoming("success-notifier-reporting")
     @Blocking
     public void successNotifier(SendPayItem sendPayItem) {
         try {
