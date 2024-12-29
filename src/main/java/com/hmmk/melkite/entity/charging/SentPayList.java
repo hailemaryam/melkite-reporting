@@ -24,10 +24,13 @@ public class SentPayList extends PanacheEntityBase {
     public Boolean pickedStatus;
     public Integer successfulCount;
     public Integer noBalanceCount;
-    public Integer invalidSubscriptionCount;
     public Integer internalErrorCount;
     public Integer noSubscriptionCount;
     public Integer hourRetryLimitExceededCount;
     public Integer dayRetryLimitExceededCount;
+    public Integer invalidRenewalPeriodCount;
+    public Integer invalidSubscriberStatusCount;
+    public Integer userNotEligibleCount;
+    public Integer unknownErrorCount;
     public Integer totalNoOfRequestSent;
 }

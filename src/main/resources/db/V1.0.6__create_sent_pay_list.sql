@@ -15,6 +15,10 @@ create table SentPayList (
     serviceId varchar(255),
     sentPayId varchar(255),
     successfulCount integer,
+    invalidRenewalPeriodCount integer,
+    invalidSubscriberStatusCount integer,
+    userNotEligibleCount integer,
+    unknownErrorCount integer,
     totalNoOfRequestSent integer,
     primary key (id)
 ) engine=InnoDB;
