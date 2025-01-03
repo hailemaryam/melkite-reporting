@@ -16,4 +16,8 @@ public class CustomerSegmentGroupDao {
         CustomerSegmentGroup.update("active = false", "serviceId = ?1 and productId = ?2 and customerSegmentGroupName != ?3", serviceId, productId, customerSegmentGroupName);
         CustomerSegmentGroup.update("active = true", "serviceId = ?1 and productId = ?2 and customerSegmentGroupName = ?3", serviceId, productId, customerSegmentGroupName);
     }
+
+    public List<CustomerSegmentGroup> findAllCustomerSegmentGroup() {
+        return CustomerSegmentGroup.listAll();
+    }
 }
