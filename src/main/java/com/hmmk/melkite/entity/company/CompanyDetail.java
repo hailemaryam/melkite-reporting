@@ -11,10 +11,11 @@ import java.util.List;
 @Cacheable
 public class CompanyDetail extends PanacheEntityBase {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     public String name;
+    public String spId;
+    public String hash;
     public String serviceId;
     public String productId;
     public String address;

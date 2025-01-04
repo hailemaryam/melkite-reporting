@@ -9,10 +9,11 @@ import java.time.Instant;
 @Cacheable
 public class SentPay extends PanacheEntityBase {
     @Id
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     public String serviceId;
     public String productId;
-    public String customerSegmentGroup;
+    public Long customerSegmentGroup;
     public String atDateOf;
     public Instant sentTime;
     public Instant expiryTime;

@@ -1,5 +1,5 @@
 create table SentPay (
-    id varchar(255) not null,
+    id BIGINT not null auto_increment,
     atDateOf varchar(255),
     customerSegmentGroup varchar(255),
     expiryTime datetime(6),

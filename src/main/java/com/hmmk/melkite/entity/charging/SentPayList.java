@@ -2,7 +2,6 @@ package com.hmmk.melkite.entity.charging;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.time.Instant;
 
@@ -11,13 +10,12 @@ import java.time.Instant;
 @Cacheable
 public class SentPayList extends PanacheEntityBase {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     public String serviceId;
     public String productId;
-    public String sentPayId;
-    public String customerSegmentGroup;
+    public Long sentPayId;
+    public Long customerSegmentGroup;
     public String phone;
     public Instant fetchedTime;
     public Instant lastPicked;

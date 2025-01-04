@@ -1,5 +1,5 @@
 create table PhoneList (
-    id varchar(255) not null,
+    id BIGINT not null auto_increment,
     customerSegmentGroup varchar(255),
     phone varchar(255),
     productId varchar(255),

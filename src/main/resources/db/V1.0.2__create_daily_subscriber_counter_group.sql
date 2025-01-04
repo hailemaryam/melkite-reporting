@@ -1,5 +1,5 @@
 create table DailySubscriberCounter (
-    id varchar(255) not null,
+    id BIGINT not null auto_increment,
     atDateOf varchar(255),
     createdAt datetime(6),
     currentCustomerSegmentGroup varchar(255),

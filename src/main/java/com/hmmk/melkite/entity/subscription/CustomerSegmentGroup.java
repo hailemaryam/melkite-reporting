@@ -9,9 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Cacheable
 public class CustomerSegmentGroup extends PanacheEntityBase {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     public String serviceId;
     public String productId;
     public String customerSegmentGroupName;

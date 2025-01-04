@@ -11,9 +11,8 @@ import java.util.List;
 @Cacheable
 public class UserDetail extends PanacheEntityBase {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     public String name;
     public String email;
     public String username;

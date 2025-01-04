@@ -11,12 +11,11 @@ import java.time.Instant;
 @Cacheable
 public class PhoneList extends PanacheEntityBase {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    public String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     public String serviceId;
     public String productId;
-    public String customerSegmentGroup;
+    public Long customerSegmentGroup;
     public String phone;
     public Boolean status;
     public Instant registrationTime;
