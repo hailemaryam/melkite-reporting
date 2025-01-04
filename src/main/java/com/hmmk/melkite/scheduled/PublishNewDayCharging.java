@@ -1,6 +1,7 @@
 package com.hmmk.melkite.scheduled;
 
 import com.hmmk.melkite.dao.CustomerSegmentGroupDao;
+import com.hmmk.melkite.dao.PhoneListDao;
 import com.hmmk.melkite.dto.SendPayItem;
 import com.hmmk.melkite.entity.charging.SentPay;
 import com.hmmk.melkite.entity.charging.SentPayList;
@@ -24,9 +25,13 @@ import java.util.concurrent.TimeUnit;
 public class PublishNewDayCharging {
     @Inject
     CustomerSegmentGroupDao customerSegmentGroupDao;
+
     @Inject
     @Channel("chargeable-item")
     Emitter<SendPayItem> chargeableItem;
+
+    @Inject
+    PhoneListDao phoneListDao;
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void publishNewDayCharging() throws InterruptedException {
@@ -38,39 +43,63 @@ public class PublishNewDayCharging {
             List<CustomerSegmentGroup> allCustomerSegmentByServiceIdAndProductId = customerSegmentGroupDao.findAllByServiceIdAndProductId(companyDetail.serviceId, companyDetail.productId);
             for (CustomerSegmentGroup customerSegmentGroup : allCustomerSegmentByServiceIdAndProductId) {
                 executorService.submit(() -> {
-
+                    createAndSentToQueue(companyDetail, customerSegmentGroup);
                 });
             }
         }
-
         executorService.shutdown();
         executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
     }
-    SendPayItem toSenPayItem(PhoneList phoneList, String spId, String hash){
+
+    private void createAndSentToQueue(CompanyDetail companyDetail, CustomerSegmentGroup customerSegmentGroup) {
+        SentPay sentPay = createSentPay(companyDetail, customerSegmentGroup);
+        List<PhoneList> phoneLists = phoneListDao.findByCustomerSegmentGroup(customerSegmentGroup.id);
+        for (PhoneList phoneList : phoneLists) {
+            SentPayList sentPayList = createSentPayList(phoneList, sentPay, companyDetail);
+            SendPayItem sendPayItem = convertToSentPayItem(sentPayList);
+            chargeableItem.send(sendPayItem);
+        }
+    }
+
+    SendPayItem convertToSentPayItem(SentPayList sentPayList){
         SendPayItem sendPayItem = new SendPayItem();
+        sendPayItem.setId(sentPayList.id);
         sendPayItem.setAtDateOf(Instant.now().truncatedTo(ChronoUnit.DAYS).toString());
-        sendPayItem.setSpId(spId);
-        sendPayItem.setHash(hash);
-        sendPayItem.setServiceId(phoneList.serviceId);
-        sendPayItem.setProductId(phoneList.productId);
-        sendPayItem.setPhone(phoneList.phone);
-        sendPayItem.setCustomerSegmentGroup(phoneList.customerSegmentGroup);
-        sendPayItem.setSentPayId(
-                phoneList.serviceId +
-                phoneList.productId +
-                Instant.now().truncatedTo(ChronoUnit.DAYS).toString() +
-                phoneList.customerSegmentGroup);
-        sendPayItem.setSendPayListId(
-                Instant.now().truncatedTo(ChronoUnit.DAYS).toString() + phoneList.id);
+        sendPayItem.setSpId(sentPayList.spId);
+        sendPayItem.setHash(sentPayList.hash);
+        sendPayItem.setServiceId(sentPayList.serviceId);
+        sendPayItem.setProductId(sentPayList.productId);
+        sendPayItem.setPhone(sentPayList.phone);
+        sendPayItem.setCustomerSegmentGroup(sentPayList.customerSegmentGroup);
+        sendPayItem.setSentPayId(sentPayList.sentPayId);
+        sendPayItem.setSendPayListId(sentPayList.id);
         sendPayItem.setStatus(false);
         return sendPayItem;
     }
-    SentPayList toSentPayList(SendPayItem sendPayItem){
+
+    SentPayList createSentPayList(PhoneList phoneList, SentPay sentPay, CompanyDetail companyDetail){
         SentPayList sentPayList = new SentPayList();
-        sentPayList.id = sendPayItem.getSendPayListId();
-        sentPayList.serviceId = sendPayItem.getServiceId();
-        sentPayList.productId = sendPayItem.getProductId();
-        sentPayList.sentPayId = sendPayItem.getSentPayId();
+        sentPayList.serviceId = phoneList.serviceId;
+        sentPayList.productId = phoneList.productId;
+        sentPayList.spId = companyDetail.spId;
+        sentPayList.hash = companyDetail.hash;
+        sentPayList.sentPayId = sentPay.id;
+        sentPayList.customerSegmentGroup = phoneList.customerSegmentGroup;
+        sentPayList.phone = phoneList.phone;
+        sentPayList.persist();
+        return sentPayList;
+    }
+
+    SentPay createSentPay(CompanyDetail companyDetail, CustomerSegmentGroup customerSegmentGroup){
+        SentPay sentPay = new SentPay();
+        sentPay.atDateOf = Instant.now().truncatedTo(ChronoUnit.DAYS).toString();
+        sentPay.serviceId = companyDetail.serviceId;
+        sentPay.productId = companyDetail.productId;
+        sentPay.customerSegmentGroup = customerSegmentGroup.id;
+        sentPay.sentTime = Instant.now();
+        sentPay.expiryTime = Instant.now().truncatedTo(ChronoUnit.DAYS).plus(1, ChronoUnit.DAYS).minus(1, ChronoUnit.SECONDS);
+        sentPay.persist();
+        return sentPay;
     }
 
 }
