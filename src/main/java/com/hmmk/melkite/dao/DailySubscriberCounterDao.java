@@ -27,7 +27,7 @@ public class DailySubscriberCounterDao {
             DailySubscriberCounter dailySubscriberCounter = new DailySubscriberCounter();
             dailySubscriberCounter.serviceId = webServiceQueueItem.getServiceId();
             dailySubscriberCounter.productId = webServiceQueueItem.getProductId();
-            dailySubscriberCounter.currentCustomerSegmentGroup = activeByServiceIdAndProductId.customerSegmentGroupName;
+            dailySubscriberCounter.currentCustomerSegmentGroup = activeByServiceIdAndProductId.id;
             dailySubscriberCounter.subscriberCount = 0;
             dailySubscriberCounter.unSubscriberCount = 0;
             byServiceIdAndProductIdAndCurrentCustomerSegmentGroup = dailySubscriberCounter;

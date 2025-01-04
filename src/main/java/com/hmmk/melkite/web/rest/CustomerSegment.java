@@ -54,7 +54,7 @@ public class CustomerSegment {
         }
         customerSegmentGroup.persist();
         if (customerSegmentGroup.active) {
-            customerSegmentGroupDao.deactivateOtherByServiceIdAndProductIdAndCustomerSegmentGroupName(customerSegmentGroup.serviceId, customerSegmentGroup.productId, customerSegmentGroup.customerSegmentGroupName);
+            customerSegmentGroupDao.activateByIdAndDeactivateOtherByServiceIdAndProductId(customerSegmentGroup.id, customerSegmentGroup.serviceId, customerSegmentGroup.productId);
         }
         return RestResponse.ResponseBuilder.ok(customerSegmentGroup).build();
     }

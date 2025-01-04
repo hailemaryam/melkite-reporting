@@ -16,9 +16,9 @@ public class CustomerSegmentGroupDao {
         return CustomerSegmentGroup.find("serviceId = ?1 and productId = ?2", serviceId, productId).list();
     }
 
-    public void deactivateOtherByServiceIdAndProductIdAndCustomerSegmentGroupName(String serviceId, String productId, String customerSegmentGroupName) {
-        CustomerSegmentGroup.update("active = false", "serviceId = ?1 and productId = ?2 and customerSegmentGroupName != ?3", serviceId, productId, customerSegmentGroupName);
-        CustomerSegmentGroup.update("active = true", "serviceId = ?1 and productId = ?2 and customerSegmentGroupName = ?3", serviceId, productId, customerSegmentGroupName);
+    public void activateByIdAndDeactivateOtherByServiceIdAndProductId(Long id, String serviceId, String productId) {
+        CustomerSegmentGroup.update("active = false", "serviceId = ?1 and productId = ?2", serviceId, productId);
+        CustomerSegmentGroup.update("active = true", "id = ?1", id);
     }
 
     public List<CustomerSegmentGroup> findAllCustomerSegmentGroup() {
