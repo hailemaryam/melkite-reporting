@@ -2,7 +2,7 @@ create table DailySubscriberCounter (
     id BIGINT not null auto_increment,
     atDateOf varchar(255),
     createdAt datetime(6),
-    currentCustomerSegmentGroup varchar(255),
+    currentCustomerSegmentGroup BIGINT,
     productId varchar(255),
     serviceId varchar(255),
     subscriberCount integer,

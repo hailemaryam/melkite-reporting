@@ -11,6 +11,7 @@ public class CustomerSegmentGroup extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+    public Long companyDetailId;
     public String serviceId;
     public String productId;
     public String customerSegmentGroupName;

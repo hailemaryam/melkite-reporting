@@ -1,6 +1,6 @@
 create table PhoneList (
     id BIGINT not null auto_increment,
-    customerSegmentGroup varchar(255),
+    customerSegmentGroup BIGINT,
     phone varchar(255),
     productId varchar(255),
     registrationTime datetime(6),

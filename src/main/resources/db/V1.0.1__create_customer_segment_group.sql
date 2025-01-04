@@ -1,5 +1,6 @@
 create table CustomerSegmentGroup (
     id BIGINT not null auto_increment,
+    companyDetailId BIGINT,
     customerSegmentGroupName varchar(255),
     productId varchar(255),
     serviceId varchar(255),

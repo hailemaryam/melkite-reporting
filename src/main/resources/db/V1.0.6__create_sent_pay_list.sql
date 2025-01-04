@@ -1,6 +1,6 @@
 create table SentPayList (
     id BIGINT not null auto_increment,
-    customerSegmentGroup varchar(255),
+    customerSegmentGroup BIGINT,
     dayRetryLimitExceededCount integer,
     fetchedTime datetime(6),
     hourRetryLimitExceededCount integer,
@@ -13,7 +13,9 @@ create table SentPayList (
     pickedStatus bit,
     productId varchar(255),
     serviceId varchar(255),
-    sentPayId varchar(255),
+    spId varchar(255),
+    hash varchar(255),
+    sentPayId BIGINT,
     successfulCount integer,
     invalidRenewalPeriodCount integer,
     invalidSubscriberStatusCount integer,
