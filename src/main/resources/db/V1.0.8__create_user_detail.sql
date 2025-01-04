@@ -3,6 +3,8 @@ create table UserDetail (
     email varchar(255),
     name varchar(255),
     password varchar(255),
+    firstName varchar(255),
+    lastName varchar(255),
     phone varchar(255),
     role varchar(255),
     salt varchar(255),

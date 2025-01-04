@@ -16,10 +16,12 @@ public class UserDetail extends PanacheEntityBase {
     public String name;
     public String email;
     public String username;
+    public String firstName;
+    public String lastName;
     public String phone;
     public String password;
     public String salt;
     public String role;
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     public List<CompanyDetail> companies;
 }
