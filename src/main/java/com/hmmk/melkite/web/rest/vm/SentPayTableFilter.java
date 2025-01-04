@@ -13,7 +13,7 @@ public class SentPayTableFilter {
     private String serviceId;
     @QueryParam("productId")
     private String productId;
-    private String customerSegmentGroup;
+    private Long customerSegmentGroup;
 
     public String buildQuery(){
         String  query = "select distinct f from SentPay f where ";

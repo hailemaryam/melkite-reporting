@@ -12,7 +12,7 @@ import java.time.Instant;
 public class DailySubscriptionFilter {
     private String serviceId;
     private String productId;
-    private String currentCustomerGroupId;
+    private Long currentCustomerGroupId;
     private Instant from;
     private Instant to;
     public String buildQuery(){

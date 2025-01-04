@@ -12,7 +12,7 @@ import java.time.Instant;
 public class SentPayDateFilter {
     private String serviceId;
     private String productId;
-    private String customerSegmentGroup;
+    private Long customerSegmentGroup;
     private Instant startDate;
     private Instant endDate;
 

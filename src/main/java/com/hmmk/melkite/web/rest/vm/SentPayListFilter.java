@@ -14,7 +14,7 @@ public class SentPayListFilter {
     @QueryParam("productId")
     private String productId;
     @QueryParam("sentPayId")
-    private String sentPayId;
+    private Long sentPayId;
 
     public String buildQuery(){
         String  query = "select distinct f from SentPay f where ";

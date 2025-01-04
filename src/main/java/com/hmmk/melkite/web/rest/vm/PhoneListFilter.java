@@ -14,7 +14,7 @@ public class PhoneListFilter {
     @QueryParam("productId")
     private String productId;
     @QueryParam("customerSegmentGroup")
-    private String customerSegmentGroup;
+    private Long customerSegmentGroup;
 
     public String buildQuery(){
         String  query = "select distinct f from PhoneList f where ";
